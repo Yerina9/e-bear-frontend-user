@@ -78,7 +78,7 @@ const PaymentPage = () => {
           type: paymentMethod.toUpperCase(), 
         });
 
-        if (!paymentResponse.ok) {
+        if (paymentResponse.status != 200) {
           throw new Error("결제 준비 중 서버 오류가 발생했습니다.");
         }
 

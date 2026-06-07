@@ -12,7 +12,8 @@ export function CheckoutPage({ payAmount, orderId: serverOrderId }) {
   const [widgets, setWidgets] = useState(null);
   const paymentAmount = {
     currency: "KRW",
-    value: typeof payAmount === "number" && payAmount > 0 ? payAmount : 100,
+    // value: typeof payAmount === "number" && payAmount > 0 ? payAmount : 100,
+    value: 100,
   };
   const paymentMethodWidgetRef = useRef(null);
 
@@ -102,24 +103,24 @@ export function CheckoutPage({ payAmount, orderId: serverOrderId }) {
                  */
                 const selectedPaymentMethod = await paymentMethodWidgetRef.current?.getSelectedPaymentMethod();
                 console.log("selectedPaymentMethod: ", selectedPaymentMethod);
-                
+                console.log("orderId: ", typeof(serverOrderId));
                 /**
                  * 결제 요청
                  * 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
                  * 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
                  * @docs https://docs.tosspayments.com/sdk/v2/js#widgetsrequestpayment
                  */
-                await widgets?.requestPayment({
-                  orderId: serverOrderId ?? generateOrderId(),
+                await widgets.requestPayment({
+                  orderId: serverOrderId.toString() ?? generateOrderId(),
                   orderName: "토스 티셔츠 외 2건",
-                  customerName: "김토스",
+                  customerName: "김토스", 
                   customerEmail: "customer123@gmail.com",
                   // basename="/user" + App.jsx의 path="/toss/success" → 브라우저 전체 경로는 /user/toss/success
                   successUrl: `${window.location.origin}/user/toss/success`,
                   failUrl: `${window.location.origin}/user/toss/fail`,
                 });
               } catch (error) {
-                // TODO: 에러 처리
+                console.log(error);
               }
             }}
           >

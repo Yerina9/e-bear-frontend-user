@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import api from "../../api/axios";
 
 export function SuccessPage() {
   const [searchParams] = useSearchParams();
@@ -23,8 +24,8 @@ export function SuccessPage() {
           amount: Number(amount)
         });
 
-        if (response.ok) {
-          const result = await response.text(); 
+        if (response.status === 200) {
+          const result = response.data; 
           
           // 성공 시 결제 완료 화면 이동
           if (result === "success") {
@@ -32,11 +33,11 @@ export function SuccessPage() {
           }
         } else {
           // 실패 시 에러 페이지로 강제 이동
-          const errorText = await response.text();
-          const errorJson = JSON.parse(errorText);
+          const errorJson = result.data;
           window.location.href = `/user/toss/fail?code=${errorJson.code}&message=${encodeURIComponent(errorJson.message)}`;
         }
       } catch (error) {
+        console.error('결제승인 중 오류 : ', error)
         window.location.href = `/user/toss/fail?code=SERVER_ERROR&message=${encodeURIComponent("서버와의 통신에 실패했습니다.")}`;
       }
     } 
