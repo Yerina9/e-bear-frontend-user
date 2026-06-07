@@ -66,7 +66,7 @@ function App() {
         <Route path="/mypage/wishlist" element={<MyPageWishlist />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signuptermsagreement" element={<SignupTermsAgreement />} />
-        <Route path="/product-list" element={<ProductListPage />} />
+        <Route path="/product-list/:id" element={<ProductListPage />} />
         <Route path="/mypage/currentview" element={<MyPageCurrentView />} />
         <Route path="/product/view/:id" element={<ProductViewPage />} />
         <Route path="/payment/:id" element={<PaymentPage />} />
