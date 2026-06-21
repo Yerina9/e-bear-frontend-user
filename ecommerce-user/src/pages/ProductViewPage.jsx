@@ -13,7 +13,7 @@ import api from "../api/axios";
 import { useNavigate } from 'react-router-dom';
 
 const ProductViewPage = () => {
-    const { id } = useParams(); 
+    const { id } = useParams();
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [comboBox, setComboBox] = useState(false);
@@ -72,7 +72,7 @@ const ProductViewPage = () => {
         const isAlreadySelected = selectProductOptionList.find(
             (option) => option.optionSubject === item.productOptionName
         );
-    
+
         if (isAlreadySelected) {
             alert("이미 선택된 옵션입니다.");
         } else {
@@ -82,7 +82,7 @@ const ProductViewPage = () => {
                 productOptionId: item.productOptionId,
                 optionCount: 1,
             };
-            
+
             setSelectProductOptionList([...selectProductOptionList, newOption]);
         }
 
@@ -94,10 +94,10 @@ const ProductViewPage = () => {
     }
 
     const productMenu = [
-        {name:"상품정보", value:"information"}, 
-        {name:"리뷰", value:"review"}, 
-        {name:"QnA", value:"qna"},
-        {name:"반품/교환", value:"return"}
+        { name: "상품정보", value: "information" },
+        { name: "리뷰", value: "review" },
+        { name: "QnA", value: "qna" },
+        { name: "반품/교환", value: "return" }
     ]
 
     const fetchProduct = async () => {
@@ -155,7 +155,7 @@ const ProductViewPage = () => {
         const count = parseInt(newCount);
         if (isNaN(count) || count < 1) return; // 1보다 작은 값 방지
 
-        setSelectProductOptionList(prevList => 
+        setSelectProductOptionList(prevList =>
             prevList.map((item, i) => i === index ? { ...item, optionCount: count } : item)
         );
     };
@@ -175,12 +175,12 @@ const ProductViewPage = () => {
     const handleDeleteOption = (index) => {
         setSelectProductOptionList(prevList => prevList.filter((_, i) => i !== index));
     };
-    
+
     useEffect(() => {
         setActiveTab(productMenu[0].value);
         fetchProduct();
 
-        setSelectProductOptionList ([]);
+        setSelectProductOptionList([]);
     }, []);
 
     if (!product) {
@@ -191,12 +191,12 @@ const ProductViewPage = () => {
         if (!category) return "";
         const names = [];
         let current = category;
-        
+
         while (current) {
             names.push(current.categoryName);
             current = current.child;
         }
-        
+
         return names.join(" > ");
     };
     return (
@@ -231,11 +231,11 @@ const ProductViewPage = () => {
                                 <div className="product-info-content">{product.productName}</div>
                                 <div className="product-info-content product-header-row">
                                     <span>{product.productPrice}원</span>
-                                    {product.productFavarite ? <HeartFillIcon className="heart-icon" /> : <HeartIcon className="icon heart-icon"/>}
+                                    {product.productFavarite ? <HeartFillIcon className="heart-icon" /> : <HeartIcon className="icon heart-icon" />}
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div className="detail_tab_area fixed" id="detail_tab_area">
                             <div className="detail_tab">
                                 <ul className="tab_list">
@@ -251,7 +251,7 @@ const ProductViewPage = () => {
                                 </ul>
                             </div>
                         </div>
-                        
+
                         {(!isMobile || activeTab === productMenu[0].value) && (
                             <>
                                 <div className="content-gap" id="bookmark_product_information">
@@ -273,13 +273,13 @@ const ProductViewPage = () => {
                                     <div className="review-section">
                                         {product.reviews && product.reviews.length > 0 ? (
                                             product.reviews.map((data, index) => (
-                                                <ReviewCard 
-                                                    key={index} 
-                                                    rate={data.reviewPoint} 
-                                                    title={data.reviewTitle} 
-                                                    context={data.reviewContent} 
-                                                    name={data.reviewer} 
-                                                    date={data.regDttm} 
+                                                <ReviewCard
+                                                    key={index}
+                                                    rate={data.reviewPoint}
+                                                    title={data.reviewTitle}
+                                                    context={data.reviewContent}
+                                                    name={data.reviewer}
+                                                    date={data.regDttm}
                                                 />
                                             ))
                                         ) : (
@@ -306,19 +306,19 @@ const ProductViewPage = () => {
                                     <hr />
                                 </div>
                                 <div className="qna-section">
-                                {product.qnas && product.qnas.length > 0 ? (
-                                    product.qnas.map((data, index) => (
-                                        <QnaAccordion 
-                                            key={data.qnaId || index} 
-                                            data={data} 
-                                            index={index} 
-                                            handleChange={handleChange} 
-                                            isExpanded={expanded === (data.qnaId || index)} 
-                                        />
-                                    ))
-                                ) : (
-                                    <div className="no-data">등록된 문의사항이 없습니다.</div>
-                                )}
+                                    {product.qnas && product.qnas.length > 0 ? (
+                                        product.qnas.map((data, index) => (
+                                            <QnaAccordion
+                                                key={data.qnaId || index}
+                                                data={data}
+                                                index={index}
+                                                handleChange={handleChange}
+                                                isExpanded={expanded === (data.qnaId || index)}
+                                            />
+                                        ))
+                                    ) : (
+                                        <div className="no-data">등록된 문의사항이 없습니다.</div>
+                                    )}
                                 </div>
                             </>
                         )}
@@ -335,15 +335,15 @@ const ProductViewPage = () => {
                             </>
                         )}
                     </div>
-                    
-                    {( !isMobile ) && (
+
+                    {(!isMobile) && (
                         <div className="product-view-contents-right-area">
                             <div className="product-view-contents-right">
                                 <ProductViewComboBox comboOptionList={product.comboOptionList} comboBox={comboBox} handleComboBox={handleComboBox} handleComboBoxItem={handleComboBoxItem} />
-                                <ProductOptionSelectList selectProductOptionList={selectProductOptionList} 
-                                                            handleCountChange={handleCountChange}
-                                                            updateCount={updateCount}
-                                                            handleDeleteOption={handleDeleteOption} />
+                                <ProductOptionSelectList selectProductOptionList={selectProductOptionList}
+                                    handleCountChange={handleCountChange}
+                                    updateCount={updateCount}
+                                    handleDeleteOption={handleDeleteOption} />
 
                                 <div className="l_product_buy_result">
                                     <div>
@@ -370,25 +370,25 @@ const ProductViewPage = () => {
                         </div>
                     )}
 
-                    {( isMobile ) && (
+                    {(isMobile) && (
                         <div>
                             <div className="l_product_buy_result">
-                            {isMobileOptionsOpen && (
-                                <div className="mobile-options-popup" onClick={(e) => e.stopPropagation()}>
-                                    <div className="mobile-options-header">
-                                        <h4>옵션 선택</h4>
-                                        <button className="btn-close" onClick={handleCloseMobileOptions}>&times;</button>
+                                {isMobileOptionsOpen && (
+                                    <div className="mobile-options-popup" onClick={(e) => e.stopPropagation()}>
+                                        <div className="mobile-options-header">
+                                            <h4>옵션 선택</h4>
+                                            <button className="btn-close" onClick={handleCloseMobileOptions}>&times;</button>
+                                        </div>
+
+                                        <div className="mobile_buy_option_area">
+                                            <ProductViewComboBox comboOptionList={product.comboOptionList} comboBox={comboBox} handleComboBox={handleComboBox} handleComboBoxItem={handleComboBoxItem} />
+                                            <ProductOptionSelectList selectProductOptionList={selectProductOptionList}
+                                                handleCountChange={handleCountChange}
+                                                updateCount={updateCount}
+                                                handleDeleteOption={handleDeleteOption} />
+                                        </div>
                                     </div>
-                                    
-                                    <div className="mobile_buy_option_area">
-                                        <ProductViewComboBox comboOptionList={product.comboOptionList} comboBox={comboBox} handleComboBox={handleComboBox} handleComboBoxItem={handleComboBoxItem}/>
-                                        <ProductOptionSelectList selectProductOptionList={selectProductOptionList} 
-                                                            handleCountChange={handleCountChange}
-                                                            updateCount={updateCount}
-                                                            handleDeleteOption={handleDeleteOption} />
-                                    </div>
-                                </div>
-                            )}
+                                )}
                                 <div>
                                     <div className="total_price_area">
                                         <span className="total_cnt">총 4개</span>
@@ -406,11 +406,16 @@ const ProductViewPage = () => {
                 </div>
             </div>
 
-            <PopUp 
-                isOpen={isPopupOpen} 
-                onClose={(handleClosePopup)} 
-                title={"상품문의"} 
-                component={<InquiryPopUp />}
+            <PopUp
+                isOpen={isPopupOpen}
+                onClose={(handleClosePopup)}
+                title={"상품문의"}
+                component={
+                    <InquiryPopUp
+                        productNo={product.productId}
+                        onClose={handleClosePopup}
+                    />
+                }
             />
         </>
     )

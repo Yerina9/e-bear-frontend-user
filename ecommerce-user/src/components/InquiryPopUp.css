@@ -3,17 +3,17 @@
 } */
 
 .inquiry-popup-container {
-    width: 100%;
-    height: 100%;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-size: 16px;
-    color: #656565;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 16px;
+  color: #656565;
 }
 
-.inquiry-popup-guide  {
+.inquiry-popup-guide {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -30,6 +30,18 @@
   margin-bottom: 12px;
 }
 
+.inquiry-title {
+  width: 100%;
+  height: 45px;
+  padding: 0 12px;
+  margin-bottom: 12px;
+  border: 1px solid #D4D4D4;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  font-family: 'Pretendard', sans-serif;
+}
+
 .inquiry-message {
   width: 100%;
   height: 210px;
@@ -38,6 +50,7 @@
   padding: 10px;
   font-size: 14px;
   resize: none;
+  font-family: 'Pretendard', sans-serif;
 }
 
 .check-submit-area {
@@ -68,14 +81,17 @@
 }
 
 .submit-button {
-    border: 1px solid #153085;
-    border-radius: 5px;
-    width: 100%;
-    height: 40px;
-    background-color: #153085;
-    color: #FFFFFF;
-    font-size: 16px;
-    cursor: pointer;
+  border: 1px solid #153085;
+  border-radius: 5px;
+  width: 100%;
+  height: 40px;
+  background-color: #153085;
+  color: #FFFFFF;
+  font-size: 16px;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .submit-button:disabled {
